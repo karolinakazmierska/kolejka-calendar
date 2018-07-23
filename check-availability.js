@@ -112,7 +112,7 @@ function playSound() {
     } else {
         console.log("Unable to require child process (error)")
     }
-    this.wait(10000)// need to wait to play the sound
+    this.wait(5000)// need to wait to play the sound
 }
 
 casper.run();

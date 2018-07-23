@@ -1,3 +1,3 @@
 #!/bin/bash
-afplay "/System/Library/Sounds/Funk.aiff"
+afplay "/System/Library/Sounds/Glass.aiff"
 exit 0
