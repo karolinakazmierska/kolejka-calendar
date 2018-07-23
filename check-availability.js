@@ -77,19 +77,30 @@ casper.thenOpen('https://kolejka-wsc.mazowieckie.pl/rezerwacje/pol/queues/200064
     this.then(function () {
         function checkReload() {
             this.echo('Checking...');
-            this.click("div[id*='nav-next']");
-            this.wait(3000);
-            this.waitForSelector("div[id*='2018-08-14']", function() {
-                if (this.exists("div[id*='2018-08-13'].day.good")) {
-                    this.echo('JEST!!!');
-                    this.wait(1000, playSound);
-                    return;
-                } else {
-                    this.echo('Date not available yet, checking again')
-                    this.reload();
-                    this.wait(10000, checkReload)
-                }
-            });
+
+            // If the site loaded correctly (no server error)
+            if (this.exists("div[id*='nav-next']")) {
+                this.click("div[id*='nav-next']");
+                this.wait(3000);
+
+                this.waitForSelector("div[id*='2018-08-14']", function() {
+                    if (this.exists("div[id*='2018-08-13'].day.good")) {
+                        this.echo('JEST!!!');
+                        this.wait(1000, playSound);
+                        return;
+                    } else {
+                        this.echo('Date not available yet, checking again')
+                        this.reload();
+                        this.wait(10000, checkReload)
+                    }
+                });
+            // If no selector (e.g. server error) - reload the page and start again
+            } else {
+                this.wait(30000);
+                this.reload();
+                this.wait(10000, checkReload)
+            }
+
 
         }
         this.then(checkReload);
