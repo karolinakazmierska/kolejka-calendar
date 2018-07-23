@@ -80,8 +80,9 @@ casper.thenOpen('https://kolejka-wsc.mazowieckie.pl/rezerwacje/pol/queues/200064
             this.click("div[id*='nav-next']");
             this.wait(3000);
             this.waitForSelector("div[id*='2018-08-14']", function() {
-                if (this.exists("div[id*='2018-08-14'].day.good")) {
-                    this.echo('JEST!!!')
+                if (this.exists("div[id*='2018-08-13'].day.good")) {
+                    this.echo('JEST!!!');
+                    this.wait(1000, playSound);
                     return;
                 } else {
                     this.echo('Date not available yet, checking again')
@@ -94,5 +95,24 @@ casper.thenOpen('https://kolejka-wsc.mazowieckie.pl/rezerwacje/pol/queues/200064
         this.then(checkReload);
     })
 });
+
+function playSound() {
+    var childProcess;
+    try {
+        childProcess = require("child_process")
+    } catch(e) {
+        console.log(e, "(error)")
+    }
+    if (childProcess){
+        childProcess.execFile("/bin/bash", ["./pl.sh"], null, function(err, stdout, stderr){
+            console.log("execFileSTDOUT: "+stdout);
+            console.log("execFileSTDERR:",stderr);
+        });
+        console.log("Shell commands executed")
+    } else {
+        console.log("Unable to require child process (error)")
+    }
+    this.wait(10000)// need to wait to play the sound
+}
 
 casper.run();
