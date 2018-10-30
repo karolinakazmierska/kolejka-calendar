@@ -1,4 +1,4 @@
-Run: phantomjs node_modules/casperjs/bin/casperjs.js check-availability.js <login> <password> <date>
+Run: phantomjs node_modules/casperjs/bin/casperjs.js check-availability.js `login` `password` `date-to-check`
 
 **About**
 
