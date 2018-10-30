@@ -9,7 +9,7 @@ var system = require('system');
 var args = system.args;
 var email = args[4];
 var password = args[5];
-
+var date = args[6];
 
 /* Start casper and go to the website */
 casper.start('https://kolejka-wsc.mazowieckie.pl/rezerwacje/pol/login');
@@ -111,8 +111,8 @@ function myCasper() {
                     this.click("div[id*='nav-next']");
                     this.wait(3000);
 
-                    this.waitForSelector("div[id*='2018-08-14']", function() {
-                        if (this.exists("div[id*='2018-08-14'].day.good")) {
+                    this.waitForSelector(`div[id*='${date}']`, function() {
+                        if (this.exists(`div[id*='${date}'].day.good`)) {
                             this.echo('New slots available');
                             this.repeat(40, playSound);
                             return;

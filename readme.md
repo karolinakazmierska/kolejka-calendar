@@ -1,4 +1,4 @@
-Run: phantomjs node_modules/casperjs/bin/casperjs.js check-availability.js <login> <password>
+Run: phantomjs node_modules/casperjs/bin/casperjs.js check-availability.js <login> <password> <date>
 
 *About*
 Web scraping script, written with phantomJS and caperJS, which monitors an online calendar system to detect if new slots have been made available.
