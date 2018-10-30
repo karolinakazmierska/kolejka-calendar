@@ -5,9 +5,15 @@ const casper = require('casper').create({
     }
 });
 
+var system = require('system');
+var args = system.args;
+var email = args[4];
+var password = args[5];
+
 
 /* Start casper and go to the website */
 casper.start('https://kolejka-wsc.mazowieckie.pl/rezerwacje/pol/login');
+
 casper.then(function() {
     this.wait(1000, myCasper)
 })
@@ -39,8 +45,8 @@ function myCasper() {
     /* Wait until the page is loaded and fill in the login form */
     casper.waitForSelector('form#LoginForm', function() {
         this.fill('form#LoginForm', {
-            'data[User][email]': 'karo.a.kazmierska@gmail.com',
-            'data[User][password]': 'portugues'
+            'data[User][email]': email,
+            'data[User][password]': password
         }, true);
         console.log('Login completed')
     })
@@ -113,7 +119,7 @@ function myCasper() {
                         } else {
                             this.echo('Date not available yet, checking again')
                             this.reload();
-                            this.wait(10000, checkReload)
+                            this.wait(50000, checkReload)
                         }
                     });
 
